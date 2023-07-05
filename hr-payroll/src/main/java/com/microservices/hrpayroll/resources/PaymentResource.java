@@ -1,5 +1,8 @@
 package com.microservices.hrpayroll.resources;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,18 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.microservices.hrpayroll.entities.Payment;
 import com.microservices.hrpayroll.services.PaymentService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 @RequestMapping(value = "/payments")
 public class PaymentResource {
-	
+
 	@Autowired
 	private PaymentService service;
 
+	@CircuitBreaker(name = "paymentResourceCB", fallbackMethod = "getPaymentAlternativo")
 	@GetMapping(value = "/{workerId}/days/{days}")
-	public ResponseEntity<Payment> getPayment(@PathVariable Long workerId, @PathVariable Integer days){
-		
+	public ResponseEntity<Payment> getPayment(@PathVariable Long workerId, @PathVariable Integer days) {
+
 		Payment payment = service.getPayment(workerId, days);
 
+		return ResponseEntity.ok().body(payment);
+	}
+
+	// uma ideia é fazer um CACHE dos últimos dados.
+	public ResponseEntity<Payment> getPaymentAlternativo(Long workerId, Integer days) {
+
+		Payment payment = new Payment("Brann", 400.0, days);
 		return ResponseEntity.ok().body(payment);
 	}
 }

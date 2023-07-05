@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@EnableDiscoveryClient // Na aula indica para usar o @EnableEurekaClient, mas ele dá erro, o sugerido foi este
+@EnableDiscoveryClient
 @SpringBootApplication
 public class HrWorkerApplication {
 
