@@ -8,11 +8,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.microservices.hrpayroll.config.AppConfig;
 
-// 1 - para que exista uma config básica para que o Feign funcione e que exista uma instância dele a disposição para poder ser injetado, precisamos usar uma annotation na classe principal do projeto, esta no caso:
+@EnableDiscoveryClient // Na aula indica para usar o @EnableEurekaClient, mas ele dá erro, o sugerido foi este
 @EnableFeignClients
 @SpringBootApplication
-@EnableDiscoveryClient
-@LoadBalancerClient(name="hr-worker", configuration=AppConfig.class)
 public class HrPayrollApplication {
 
 	public static void main(String[] args) {

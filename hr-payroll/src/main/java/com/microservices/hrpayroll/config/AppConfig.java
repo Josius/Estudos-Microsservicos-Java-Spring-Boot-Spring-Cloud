@@ -9,23 +9,24 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class AppConfig {
-
-	@Bean
-	public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(ConfigurableApplicationContext context){
-		System.out.println("Configuring Load balancer to prefer same instance?");
-		return ServiceInstanceListSupplier.builder()
-				.withBlockingDiscoveryClient()
-               	.withSameInstancePreference()
-               	.build(context);
-	}
 	
-	// ABAIXO ESTAVA USANDO REST TEMPLATE NA AULA 06 E ANTERIOR
 	// método com função de registrar uma instância única (padrão de projeto Singleton) de um objeto do tipo RestTemplate
 	// tal instância ficará disponível para injetar em outros componentes
 	// cria um componente a partir de uma chamada de método
-	// @Bean
-	// public RestTemplate restTemplate(){
+	@Bean
+	public RestTemplate restTemplate(){
 		
-	// 	return new RestTemplate();
+		return new RestTemplate();
+	}
+	
+	// ABAIXO: teste de load balancer do spring cloud, somente ele, não deu certo. Na aula 10 não precisamos mais dele pois, ao usar o Eureka Server, o sistema de load balancer já está implementado.
+	// @Bean
+	// public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(ConfigurableApplicationContext context){
+	// 	System.out.println("Configuring Load balancer to prefer same instance?");
+	// 	return ServiceInstanceListSupplier.builder()
+	// 			.withBlockingDiscoveryClient()
+    //            	.withSameInstancePreference()
+    //            	.build(context);
 	// }
+	
 }
