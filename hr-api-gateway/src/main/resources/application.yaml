@@ -1,0 +1,33 @@
+server:
+  port: 8765
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: hr-api-gateway
+  cloud:
+    gateway:
+      discovery:
+# no caso, para funcionar sem passar rotas, usa-se o locator
+        locator:
+          enabled: true
+# e como o nome do microsserviço é registrado em maiúsculas no Eureka para habilitar os valores em minúsculas na URL, adicionamos a linha de configuração abaixo para a API do Gateway:
+          lower-case-service-id: true
+
+# rotas não funcionaram
+      # routes:
+      # - id: hr-worker
+      #   uri: lb://hr-worker
+      #   predicates:
+      #     - Path=/hr-worker/**
+      # - id: hr-payroll
+      #   uri: lb://hr-payroll
+      #   predicates:
+      #     - Path=/hr-payroll/**
+
+
+      
