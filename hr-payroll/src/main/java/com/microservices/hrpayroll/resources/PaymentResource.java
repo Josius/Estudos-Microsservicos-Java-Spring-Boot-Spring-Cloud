@@ -33,6 +33,7 @@ public class PaymentResource {
 	}
 
 	// uma ideia é fazer um CACHE dos últimos dados.
+	// NOTA: nesta implementação, precisa necessariamente receber a exception Throwable abaixo.
 	public ResponseEntity<Payment> getPaymentAlternativo(Long workerId, Integer days, Throwable e) {
 
 		// mock
