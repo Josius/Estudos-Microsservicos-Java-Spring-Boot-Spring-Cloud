@@ -19,10 +19,11 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 @RequestMapping(value = "/payments")
 public class PaymentResource {
 
+	private static final String PAYMENT_RESOURCE = "paymentResource";
 	@Autowired
 	private PaymentService service;
 
-	@CircuitBreaker(name = "paymentResourceCB", fallbackMethod = "getPaymentAlternativo")
+	@CircuitBreaker(name = PAYMENT_RESOURCE, fallbackMethod = "getPaymentAlternativo")
 	@GetMapping(value = "/{workerId}/days/{days}")
 	public ResponseEntity<Payment> getPayment(@PathVariable Long workerId, @PathVariable Integer days) {
 
@@ -32,8 +33,9 @@ public class PaymentResource {
 	}
 
 	// uma ideia é fazer um CACHE dos últimos dados.
-	public ResponseEntity<Payment> getPaymentAlternativo(Long workerId, Integer days) {
+	public ResponseEntity<Payment> getPaymentAlternativo(Long workerId, Integer days, Throwable e) {
 
+		// mock
 		Payment payment = new Payment("Brann", 400.0, days);
 		return ResponseEntity.ok().body(payment);
 	}
